@@ -8,7 +8,7 @@ from models.base_model import BaseModel
 class HBNBCommand(cmd.Cmd):
     """Console"""
 
-    prompt = '(hbtn) '
+    prompt = '(hbnb) '
     class_dict = {
         'BaseModel': BaseModel
     }
