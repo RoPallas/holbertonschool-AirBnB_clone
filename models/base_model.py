@@ -10,7 +10,7 @@ class BaseModel():
 
     def __init__(self, *args, **kwargs):
         """"""
-        if len(kwargs) > 0:
+        if kwargs:
             format_date = '%Y-%m-%dT%H:%M:%S.%f'
             for k, v in kwargs.items():
                 if k == '__class__':
@@ -34,7 +34,7 @@ class BaseModel():
 
     def to_dict(self):
         """"""
-        new_dict = self.__dict__
+        new_dict = self.__dict__.copy()
         new_dict['__class__'] = self.__class__.__name__
         new_dict['updated_at'] = self.updated_at.isoformat()
         new_dict['created_at'] = self.created_at.isoformat()
