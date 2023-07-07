@@ -4,6 +4,11 @@ import cmd
 import models
 from models.base_model import BaseModel
 from models.user import User
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.state import State
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
@@ -12,7 +17,12 @@ class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
     class_dict = {
         'BaseModel': BaseModel,
-        'User': User
+        'User': User,
+        'City': City,
+        'Amenity' : Amenity,
+        'Place': Place,
+        'State': State,
+        'Review': Review
     }
 
     def do_quit(self, arg):
