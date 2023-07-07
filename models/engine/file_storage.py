@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 """Class FileStorage"""
 import json
+import os
 from models.base_model import BaseModel
+from models.user import User
 
 
 class FileStorage():
@@ -9,6 +11,10 @@ class FileStorage():
 
     __file__path = "file.json"
     __objects = {}
+    class_dict = {
+        'BaseModel': BaseModel,
+        'User': User
+    }
 
     def all(self):
         """"""
@@ -29,12 +35,9 @@ class FileStorage():
 
     def reload(self):
         """"""
-        try:
+        if os.path.exists(self.__file__path):
             with open(self.__file__path, "r") as filename:
                 data = json.load(filename)
             for k, obj_data in data.items():
-                self.__objects[k] = BaseModel(**obj_data)
-        except FileExistsError:
-            pass
-        except FileNotFoundError:
-            pass
+                class_name = k.split('.')[0] 
+                self.__objects[k] = self.class_dict[class_name](**obj_data)
