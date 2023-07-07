@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """Class FileStorage"""
 import json
-import os
 
 
 class FileStorage():
@@ -33,8 +32,12 @@ class FileStorage():
         """"""
         from models.base_model import BaseModel
 
-        if os.path.exists(self.__file__path):
+        try:
             with open(self.__file__path, "r") as filename:
                 data = json.load(filename)
             for k, obj_data in data.items():
                 self.__objects[k] = BaseModel(**obj_data)
+        except FileExistsError:
+            pass
+        except FileNotFoundError:
+            pass
