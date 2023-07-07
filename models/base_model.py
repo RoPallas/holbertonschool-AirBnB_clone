@@ -10,7 +10,7 @@ class BaseModel():
 
     def __init__(self, *args, **kwargs):
         """"""
-        if kwargs:
+        if len(kwargs) > 0:
             format_date = '%Y-%m-%dT%H:%M:%S.%f'
             for k, v in kwargs.items():
                 if k == '__class__':
