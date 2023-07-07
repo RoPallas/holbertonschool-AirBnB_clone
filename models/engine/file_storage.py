@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Class FileStorage"""
 import json
-
+from models.base_model import BaseModel
 
 class FileStorage():
     """Class FileStorage"""
@@ -17,7 +17,7 @@ class FileStorage():
 
     def new(self, obj):
         """"""
-        k = f"{obj.__class__.__name__}.{obj.id}"
+        k = obj.__class__.__name__ + "." + obj.id
         self.__objects[k] = obj
 
     def save(self):
@@ -30,8 +30,6 @@ class FileStorage():
 
     def reload(self):
         """"""
-        from models.base_model import BaseModel
-
         try:
             with open(self.__file__path, "r") as filename:
                 data = json.load(filename)
