@@ -3,13 +3,12 @@
 import json
 from models.base_model import BaseModel
 
+
 class FileStorage():
     """Class FileStorage"""
 
-    def __init__(self):
-        """"""
-        self.__file__path = "file.json"
-        self.__objects = {}
+    __file__path = "file.json"
+    __objects = {}
 
     def all(self):
         """"""
