@@ -36,6 +36,5 @@ class FileStorage():
         if os.path.exists(self.__file__path):
             with open(self.__file__path, "r") as filename:
                 data = json.load(filename)
-                self.__objects = {}
-                for k, obj_data in data.items():
-                    self.__objects[k] = BaseModel(**obj_data)
+            for k, obj_data in data.items():
+                self.__objects[k] = BaseModel(**obj_data)
