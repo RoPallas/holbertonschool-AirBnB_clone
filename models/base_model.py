@@ -16,7 +16,8 @@ class BaseModel():
                 if k == '__class__':
                     continue
                 elif k in ['created_at', 'updated_at']:
-                    self.k = datetime.strptime(v, format_date)
+                    date_value = datetime.strptime(v, format_date)
+                    setattr(self, k, date_value)
                 else:
                     setattr(self, k, v)
         else:
