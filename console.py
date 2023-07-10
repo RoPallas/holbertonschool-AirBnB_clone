@@ -12,14 +12,25 @@ from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
-    """Console"""
+    """Console
+
+    Methods:
+        do_quit(self, arg)
+        do_EOF(self, arg)
+        emptyline(self)
+        do_create(self, arg)
+        do_show(self, arg)
+        do_destroy(self, arg)
+        do_all(self, arg)
+        do_update(self, arg)
+    """
 
     prompt = '(hbnb) '
     class_dict = {
         'BaseModel': BaseModel,
         'User': User,
         'City': City,
-        'Amenity' : Amenity,
+        'Amenity': Amenity,
         'Place': Place,
         'State': State,
         'Review': Review

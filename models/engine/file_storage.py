@@ -20,23 +20,23 @@ class FileStorage():
         'BaseModel': BaseModel,
         'User': User,
         'City': City,
-        'Amenity' : Amenity,
+        'Amenity': Amenity,
         'Place': Place,
         'State': State,
         'Review': Review
     }
 
     def all(self):
-        """"""
+        """Return dict of objects"""
         return self.__objects
 
     def new(self, obj):
-        """"""
-        k = obj.__class__.__name__ + "." + obj.id
+        """Add a new obj to dict of objects"""
+        k = f"{obj.__class__.__name__}.{obj.id}"
         self.__objects[k] = obj
 
     def save(self):
-        """"""
+        """Save the objects in a json File"""
         dict_obj = {}
         for k, object in self.__objects.items():
             dict_obj[k] = object.to_dict()
@@ -44,10 +44,10 @@ class FileStorage():
             json.dump(dict_obj, filename)
 
     def reload(self):
-        """"""
+        """Reload the objects from the json File"""
         if os.path.exists(self.__file__path):
             with open(self.__file__path, "r") as filename:
                 data = json.load(filename)
             for k, obj_data in data.items():
-                class_name = k.split('.')[0] 
+                class_name = k.split('.')[0]
                 self.__objects[k] = self.class_dict[class_name](**obj_data)
