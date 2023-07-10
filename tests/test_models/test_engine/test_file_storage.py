@@ -21,7 +21,6 @@ class TestFileStorage(TestCase):
     def test_storage_initializes(self):
         self.assertEqual(type(storage), FileStorage)
 
-
     def test_new(self):
         obj = BaseModel()
         storage.new(obj)
