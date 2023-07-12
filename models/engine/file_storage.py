@@ -12,7 +12,21 @@ from models.review import Review
 
 
 class FileStorage():
-    """Class FileStorage"""
+    """Class FileStorage
+
+    Serializes instances to a JSON file and
+    deserializes JSON file to instances.
+
+    Attr:
+        __file__path (str) - The path to the JSON file to save and load data
+        __objects (dict) - Dictionary of objects saved in the JSON file
+        class_dict (dict) - Dictionary of class available
+    Methods:
+        all(self)
+        new(self, obj)
+        save(self)
+        reload(self)
+    """
 
     __file__path = "file.json"
     __objects = {}
@@ -44,7 +58,7 @@ class FileStorage():
             json.dump(dict_obj, filename)
 
     def reload(self):
-        """Reload the objects from the json File"""
+        """Reload the objects from the json File, if exists"""
         if os.path.exists(self.__file__path):
             with open(self.__file__path, "r") as filename:
                 data = json.load(filename)

@@ -1,31 +1,67 @@
 #!/usr/bin/python3
+"""Unittests for FileStorage class"""
 import unittest
-from unittest import TestCase
+import os
+import json
+from datetime import datetime
 from models import storage
-from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
+from models.engine.file_storage import FileStorage
 
 
-class TestFileStorage(TestCase):
+class TestFileStorageClass(unittest.TestCase):
+    """Test for FilageStore Class"""
 
-    def test_FileStorage_instantiation_no_args(self):
-        self.assertEqual(type(FileStorage()), FileStorage)
+    def tear_down(self):
+        """Delete the JSON file after testing """
+        if os.path.exists("file.json"):
+            os.remove("file.json")
 
-    def test_FileStorage_instantiation_with_arg(self):
-        with self.assertRaises(TypeError):
-            FileStorage(None)
-
-    def testFileStorage_objects_is_private_dict(self):
-        self.assertEqual(dict, type(FileStorage._FileStorage__objects))
-
-    def test_storage_initializes(self):
-        self.assertEqual(type(storage), FileStorage)
+    def test_all(self):
+        """Test all method, verify that it generates a dictionary"""
+        objects = storage.all()
+        self.assertIsInstance(objects, dict)
 
     def test_new(self):
+        """Test new method, verify that news objects
+        are saved in the dictionary"""
         obj = BaseModel()
-        storage.new(obj)
+        key = f"BaseModel.{obj.id}"
+
+        attr_dict = {}
+        attr_dict["id"] = "New id"
+        attr_dict["created_at"] = datetime.now().isoformat()
+        attr_dict["updated_at"] = datetime.now().isoformat()
+        obj_2 = BaseModel(**attr_dict)
+        storage.new(obj_2)
+        key_2 = f"BaseModel.{obj_2.id}"
+
         objects = storage.all()
-        self.assertIn(obj, objects.values())
+        self.assertIn(key, objects)
+        self.assertEqual(obj, objects[key])
+        self.assertIn(key_2, objects)
+        self.assertEqual(obj_2, objects[key_2])
+
+    def test_save(self):
+        """Test save method, verify that create a file and
+        save the object inside"""
+        obj = BaseModel()
+        obj.save()
+        key = f"BaseModel.{obj.id}"
+        file = "file.json"
+        self.assertTrue(os.path.exists(file))
+        with open(file, "r") as f:
+            content = json.load(f)
+        self.assertIn(key, content)
+
+    def test_reload(self):
+        """Test reload method, verify that reaload an obj
+        from a JSON file"""
+        obj = BaseModel()
+        storage.save()
+        storage.reload()
+        key = f"BaseModel.{obj.id}"
+        self.assertTrue(key in storage.all())
 
 
 if __name__ == '__main__':

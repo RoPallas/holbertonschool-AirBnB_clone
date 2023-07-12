@@ -6,7 +6,20 @@ import models
 
 
 class BaseModel():
-    """Class BaseModel"""
+    """Class BaseModel
+
+    Defines all common attributes/methods for other classes.
+
+    attr:
+        id (str) - universal identifier, converted to str
+        created_at (datetime) - datetime of creation
+        updated_at (datetime) - datetime of update
+    methods:
+        __init__(self, *args, **kwargs)
+        save(self)
+        to_dict(self)
+        __str__(self)
+    """
 
     def __init__(self, *args, **kwargs):
         """Initialice an instance of BaseModel"""
